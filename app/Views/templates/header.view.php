@@ -98,30 +98,30 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/formulario" class="nav-link <?php echo isset($seccion) && $seccion === 'formulario' ? 'active' : ''; ?>">
+                <a href="/usuarios-full" class="nav-link <?php echo isset($seccion) && $seccion === 'usuarios-full' ? 'active' : ''; ?>">
                   <i class="fas fa-parachute-box nav-icon"></i>
-                  <p>Formulario</p>
+                  <p>Todos usuarios</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/anagrama" class="nav-link <?php echo isset($seccion) && $seccion === 'anagrama' ? 'active' : ''; ?>">
+                <a href="/usuarios-carlos" class="nav-link <?php echo isset($seccion) && $seccion === 'usuarios-carlos' ? 'active' : ''; ?>">
                   <i class="fas fa-cubes nav-icon"></i>
-                  <p>Anagrama</p>
+                  <p>Usuarios Carlos</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/letra-palabras" class="nav-link <?php echo isset($seccion) && $seccion === 'letra-palabras' ? 'active' : ''; ?>">
+                <a href="/usuarios-standard" class="nav-link <?php echo isset($seccion) && $seccion === 'usuarios-standard' ? 'active' : ''; ?>">
                   <i class="fas fa-cube nav-icon"></i>
-                  <p>Palabras-letra</p>
+                  <p>Usuarios estándard</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/contar-letras" class="nav-link <?php echo isset($seccion) && $seccion === 'contar-letras' ? 'active' : ''; ?>">
+                <a href="/usuarios-salar" class="nav-link <?php echo isset($seccion) && $seccion === 'usuarios-salar' ? 'active' : ''; ?>">
                   <i class="fas fa-font nav-icon"></i>
-                  <p>Contar letras</p>
+                  <p>Usuarios por salario</p>
                 </a>
               </li>
-              <li class="nav-item">
+             <!-- <li class="nav-item">
                 <a href="/procesar-asignaturas-1" class="nav-link <?php echo isset($seccion) && $seccion === 'procesar-asignaturas-1' ? 'active' : ''; ?>">
                   <i class="fas fa-cube nav-icon"></i>
                   <p>Proc. asign. I</p>
@@ -132,7 +132,7 @@
                   <i class="fas fa-school nav-icon"></i>
                   <p>Proc. asign. II</p>
                 </a>
-              </li>
+              </li>-->
             </ul>
           </li>                   
         </ul>

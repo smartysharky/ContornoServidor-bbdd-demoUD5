@@ -98,10 +98,30 @@ class FrontController{
                 }
                 , 'post');
                 
-        Route::add('/test-bbdd', 
+        Route::add('/usuarios-full', 
                 function(){
                     $controlador = new \Com\Daw2\Controllers\UsuarioController();
-                    $controlador->test();
+                    $controlador->mostrarTodosUsuarios();
+                }
+                , 'get');
+        
+        Route::add('/usuarios-carlos', 
+                function(){
+                    $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                    $controlador->mostrarUsuariosCarlos();
+                }
+                , 'get');
+        Route::add('/usuarios-standard', 
+                function(){
+                    $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                    $controlador->mostrarUsuariosStandard();
+                }
+                , 'get');
+        
+        Route::add('/usuarios-salar', 
+                function(){
+                    $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                    $controlador->mostrarUsuariosOrderBySalar();
                 }
                 , 'get');
                 
