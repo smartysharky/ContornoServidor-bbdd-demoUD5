@@ -27,8 +27,7 @@
                             <td><?php echo $u['username']; ?></td>
                             <td><?php echo $u['rol']; ?></td>
                             <td><?php echo number_format($u['salarioBruto'], 2, ',', '.'); ?></td>
-                            <td><?php echo $u['retencionIRPF']; ?>%</td>
-                            <td>1992</td>                             
+                            <td><?php echo $u['retencionIRPF']; ?>%</td>                          
                         </tr>                    
                         <?php
                         }
