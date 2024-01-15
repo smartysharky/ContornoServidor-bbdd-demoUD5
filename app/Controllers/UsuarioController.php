@@ -56,4 +56,21 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         );        
         $this->view->showViews(array('templates/header.view.php', 'usuarios.view.php', 'templates/footer.view.php'), $data);
     }
+    
+    function mostrarListadoFiltros() : void{
+        $modelo = new \Com\Daw2\Models\UsuarioModel();
+        $usuarios = $modelo->getAllUsers();
+        
+        $rolModel = new \Com\Daw2\Models\AuxRolModel();
+        $roles = $rolModel->getAll();
+        
+        $data = array(
+            'titulo' => 'Usuarios',
+            'breadcrumb' => ['Inicio', 'Usuarios'],
+            'seccion' => 'usuarios-filtros',
+            'usuarios' => $usuarios,
+            'roles' => $roles
+        );        
+        $this->view->showViews(array('templates/header.view.php', 'usuarios-filtro.view.php', 'templates/footer.view.php'), $data);
+    }
 }

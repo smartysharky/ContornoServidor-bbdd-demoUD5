@@ -105,6 +105,13 @@ class FrontController{
                 }
                 , 'get');
         
+        Route::add('/usuarios', 
+                function(){
+                    $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                    $controlador->mostrarListadoFiltros();
+                }
+                , 'get');
+        
         Route::add('/usuarios-carlos', 
                 function(){
                     $controlador = new \Com\Daw2\Controllers\UsuarioController();
