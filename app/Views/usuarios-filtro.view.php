@@ -35,7 +35,13 @@
                                     ?>
                                 </select>
                             </div>
-                        </div>                                                
+                        </div> 
+                        <div class="col-12 col-lg-4">
+                            <div class="mb-3">
+                                <label for="username">Username:</label>
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Nombre de usuario" value="<?php echo (isset($input['username'])) ? $input['username'] : ''; ?>" />
+                            </div>
+                        </div>  
                     </div>
                 </div>
                 <div class="card-footer">

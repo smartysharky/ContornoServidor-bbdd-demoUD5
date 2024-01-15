@@ -61,9 +61,14 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         $rolModel = new \Com\Daw2\Models\AuxRolModel();
         $roles = $rolModel->getAll();
         
+        $input = filter_var_array($_GET, FILTER_SANITIZE_STRING);
+        
         $modelo = new \Com\Daw2\Models\UsuarioModel();
         if(!empty($_GET['id_rol']) && filter_var($_GET['id_rol'], FILTER_VALIDATE_INT)){
             $usuarios = $modelo->getUsuariosByIdRol((int)$_GET['id_rol']);
+        }
+        else if(!empty($_GET['username'])){
+            $usuarios = $modelo->getUsuariosByUSername($_GET['username']);
         }
         else{
             $usuarios = $modelo->getAllUsers();
@@ -74,7 +79,8 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
             'breadcrumb' => ['Inicio', 'Usuarios'],
             'seccion' => 'usuarios-filtros',
             'usuarios' => $usuarios,
-            'roles' => $roles
+            'roles' => $roles,
+            'input' => $input
         );        
         $this->view->showViews(array('templates/header.view.php', 'usuarios-filtro.view.php', 'templates/footer.view.php'), $data);
     }
