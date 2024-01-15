@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Com\Daw2\Models;
 
 use \PDO;
@@ -25,6 +27,12 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
     
     function getUsersNameCarlos() : array{        
         $stmt = $this->pdo->query(self::SELECT_FROM . " WHERE username LIKE 'carlos%'");
+        return $stmt->fetchAll();
+    }
+    
+    function getUsuariosByIdRol(int $idRol) : array{
+        $stmt = $this->pdo->prepare(self::SELECT_FROM . " WHERE u.id_rol = :id_rol");
+        $stmt->execute(['id_rol' => $idRol]);
         return $stmt->fetchAll();
     }
     

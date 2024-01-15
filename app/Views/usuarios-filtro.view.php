@@ -1,5 +1,16 @@
 <!--Inicio HTML -->
 <div class="row">       
+        <?php
+        if($_ENV['app.debug'] & isset($_GET)){
+            ?>
+            <div class="col-12">
+                <div class="alert alert-info">
+                    <?php var_dump($_GET); ?>
+                </div>
+            </div>
+    <?php
+        }
+        ?>
         <div class="col-12">
         <div class="card shadow mb-4">
             <form method="get" action="">                
@@ -18,7 +29,7 @@
                                 <select name="id_rol" id="id_rol" class="form-control" data-placeholder="Rol">
                                     <option value="">-</option>
                                     <?php foreach($roles as $rol){ ?>
-                                    <option value="<?php echo $rol['id_rol']; ?>"><?php echo $rol['nombre_rol']; ?></option>
+                                    <option value="<?php echo $rol['id_rol']; ?>" <?php echo (isset($_GET['id_rol']) && $rol['id_rol'] == $_GET['id_rol']) ? 'selected' : ''; ?>><?php echo ucfirst($rol['nombre_rol']); ?></option>
                                     <?php
                                     } 
                                     ?>
@@ -29,7 +40,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="col-12 text-right">                     
-                        <a href="/proveedores" value="" name="reiniciar" class="btn btn-danger">Reiniciar filtros</a>
+                        <a href="/usuarios" value="" name="reiniciar" class="btn btn-danger">Reiniciar filtros</a>
                         <input type="submit" value="Aplicar filtros" name="enviar" class="btn btn-primary ml-2"/>
                     </div>
                 </div>
