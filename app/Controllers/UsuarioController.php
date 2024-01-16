@@ -95,5 +95,5 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
             'input' => $input
         );        
         $this->view->showViews(array('templates/header.view.php', 'usuarios-filtro.view.php', 'templates/footer.view.php'), $data);
-    }
+    }    
 }
