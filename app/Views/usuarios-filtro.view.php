@@ -3,9 +3,14 @@
         <?php
         if($_ENV['app.debug'] & isset($_GET)){
             ?>
-            <div class="col-12">
+            <div class="col-6">
                 <div class="alert alert-info">
                     <?php var_dump($_GET); ?>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="alert alert-info">
+                    <?php var_dump($input); ?>
                 </div>
             </div>
     <?php
@@ -29,7 +34,7 @@
                                 <select name="id_rol" id="id_rol" class="form-control" data-placeholder="Rol">
                                     <option value="">-</option>
                                     <?php foreach($roles as $rol){ ?>
-                                    <option value="<?php echo $rol['id_rol']; ?>" <?php echo (isset($_GET['id_rol']) && $rol['id_rol'] == $_GET['id_rol']) ? 'selected' : ''; ?>><?php echo ucfirst($rol['nombre_rol']); ?></option>
+                                    <option value="<?php echo $rol['id_rol']; ?>" <?php echo (isset($input['id_rol']) && $rol['id_rol'] == $input['id_rol']) ? 'selected' : ''; ?>><?php echo ucfirst($rol['nombre_rol']); ?></option>
                                     <?php
                                     } 
                                     ?>
@@ -40,6 +45,19 @@
                             <div class="mb-3">
                                 <label for="username">Username:</label>
                                 <input type="text" class="form-control" name="username" id="username" placeholder="Nombre de usuario" value="<?php echo (isset($input['username'])) ? $input['username'] : ''; ?>" />
+                            </div>
+                        </div> 
+                        <div class="col-12 col-lg-4">
+                            <div class="mb-3">
+                                <label for="salario">Salario:</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" name="min_salar" id="min_salar" value="<?php echo isset($input['min_salar']) ? $input['min_salar'] : ''; ?>" placeholder="Mí­nimo" />
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" name="max_salar" id="max_salar" value="<?php echo isset($input['max_salar']) ? $input['max_salar'] : ''; ?>" placeholder="Máximo" />
+                                    </div>
+                                </div>
                             </div>
                         </div>  
                     </div>

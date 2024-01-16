@@ -97,6 +97,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+                <li class="nav-item">
+                <a href="/usuarios" class="nav-link <?php echo isset($seccion) && $seccion === 'usuarios' ? 'active' : ''; ?>">
+                  <i class="fas fa-users nav-icon"></i>
+                  <p>Usuarios (filtros)</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="/usuarios-full" class="nav-link <?php echo isset($seccion) && $seccion === 'usuarios-full' ? 'active' : ''; ?>">
                   <i class="fas fa-parachute-box nav-icon"></i>

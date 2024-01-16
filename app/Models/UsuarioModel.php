@@ -36,9 +36,29 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
         return $stmt->fetchAll();
     }
     
-    function getUsuariosByUSername(string $username) : array{
+    function getUsuariosByUsername(string $username) : array{
         $stmt = $this->pdo->prepare(self::SELECT_FROM . " WHERE u.username LIKE :username");
         $stmt->execute(['username' => "%$username%"]);
+        return $stmt->fetchAll();
+    }
+    
+    function getUsuariosBySalar(?float $min, ?float $max){
+        $query = self::SELECT_FROM . " WHERE ";
+        $condiciones = [];
+        $vars = [];
+        if(!is_null($min)){
+            $condiciones[] = "salarioBruto >= :min";
+            $vars['min'] = $min;
+        }
+        if(!is_null($max)){
+            $condiciones[] = "salarioBruto <= :max";
+            $vars['max'] = $max;
+        }
+        
+        $query .= implode(" AND ", $condiciones) . " ORDER BY salarioBruto";
+        
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute($vars);
         return $stmt->fetchAll();
     }
     

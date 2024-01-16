@@ -61,14 +61,26 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         $rolModel = new \Com\Daw2\Models\AuxRolModel();
         $roles = $rolModel->getAll();
         
-        $input = filter_var_array($_GET, FILTER_SANITIZE_STRING);
+        $input = filter_var_array($_GET, FILTER_SANITIZE_SPECIAL_CHARS);
         
         $modelo = new \Com\Daw2\Models\UsuarioModel();
         if(!empty($_GET['id_rol']) && filter_var($_GET['id_rol'], FILTER_VALIDATE_INT)){
             $usuarios = $modelo->getUsuariosByIdRol((int)$_GET['id_rol']);
         }
         else if(!empty($_GET['username'])){
-            $usuarios = $modelo->getUsuariosByUSername($_GET['username']);
+            $usuarios = $modelo->getUsuariosByUsername($_GET['username']);
+        }
+        else if((!empty($_GET['min_salar']) && is_numeric($_GET['min_salar'])) || (!empty($_GET['max_salar']) && is_numeric($_GET['max_salar']))){
+            $min = (!empty($_GET['min_salar']) && is_numeric($_GET['min_salar'])) ? (float) $_GET['min_salar'] : NULL;
+            /*if((!empty($_GET['min_salar']) && is_numeric($_GET['min_salar']))){
+                $min =  (float) $_GET['min_salar'] ;
+            }
+            else{
+                $min = NULL;
+            }*/
+            $max = (!empty($_GET['max_salar']) && is_numeric($_GET['max_salar'])) ? (float) $_GET['max_salar'] : NULL;
+            
+            $usuarios = $modelo->getUsuariosBySalar($min, $max);            
         }
         else{
             $usuarios = $modelo->getAllUsers();
@@ -77,7 +89,7 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         $data = array(
             'titulo' => 'Usuarios',
             'breadcrumb' => ['Inicio', 'Usuarios'],
-            'seccion' => 'usuarios-filtros',
+            'seccion' => 'usuarios',
             'usuarios' => $usuarios,
             'roles' => $roles,
             'input' => $input
