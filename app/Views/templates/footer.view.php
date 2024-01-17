@@ -41,6 +41,7 @@
 <!-- overlayScrollbars -->
 <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 <script src="assets/js/adminlte.js"></script>
+
 <!-- AdminLTE for demo purposes -->
 <!--<script src="dist/js/demo.js"></script>-->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -49,7 +50,7 @@
 if(isset($js) && is_array($js)){
     foreach($js as $file){
         ?>
-        <script src="<?php $file; ?>"></script>
+        <script src="<?php echo $file; ?>"></script>
 <?php
     }
 }

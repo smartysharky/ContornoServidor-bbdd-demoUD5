@@ -61,6 +61,9 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         $rolModel = new \Com\Daw2\Models\AuxRolModel();
         $roles = $rolModel->getAll();
         
+        $countriesModel = new \Com\Daw2\Models\AuxCountriesModel();
+        $paises = $countriesModel->getAll();
+        
         $input = filter_var_array($_GET, FILTER_SANITIZE_SPECIAL_CHARS);
         
         $modelo = new \Com\Daw2\Models\UsuarioModel();
@@ -104,8 +107,10 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
             'seccion' => 'usuarios',
             'usuarios' => $usuarios,
             'roles' => $roles,
-            'input' => $input
-        );        
+            'paises' => $paises,
+            'input' => $input,
+            'js' => array('plugins/select2/js/select2.full.min.js', 'assets/js/pages/usuarios-filtro.view.js')
+        );                
         $this->view->showViews(array('templates/header.view.php', 'usuarios-filtro.view.php', 'templates/footer.view.php'), $data);
     }    
 }

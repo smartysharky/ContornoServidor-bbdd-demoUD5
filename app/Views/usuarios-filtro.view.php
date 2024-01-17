@@ -31,7 +31,7 @@
                         <div class="col-12 col-lg-4">
                             <div class="mb-3">
                                 <label for="id_rol">Rol:</label>
-                                <select name="id_rol" id="id_rol" class="form-control" data-placeholder="Rol">
+                                <select name="id_rol" id="id_rol" class="form-control select2" data-placeholder="Rol">
                                     <option value="">-</option>
                                     <?php foreach($roles as $rol){ ?>
                                     <option value="<?php echo $rol['id_rol']; ?>" <?php echo (isset($input['id_rol']) && $rol['id_rol'] == $input['id_rol']) ? 'selected' : ''; ?>><?php echo ucfirst($rol['nombre_rol']); ?></option>
@@ -72,7 +72,19 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>  
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="mb-3">
+                                <label for="id_country">Paises:</label>
+                                <select name="id_country[]" id="id_country" class="form-control select2" data-placeholder="Países" multiple>                                    
+                                    <?php foreach($paises as $pais){ ?>
+                                    <option value="<?php echo $pais['id']; ?>" <?php echo (isset($input['id_country']) && in_array($pais['id'], $input['id_country'])) ? 'selected' : ''; ?>><?php echo $pais['country_name']; ?></option>
+                                    <?php
+                                    } 
+                                    ?>
+                                </select>
+                            </div>
+                        </div> 
                     </div>
                 </div>
                 <div class="card-footer">
