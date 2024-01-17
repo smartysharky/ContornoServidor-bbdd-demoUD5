@@ -92,14 +92,14 @@
             </div>
             <!-- Card Body -->
             <div class="card-body" id="card_table">
-                <div id="button_container" class="mb-3"></div>
                 <table id="tabladatos" class="table table-striped">                    
                     <thead>
                         <tr>
                             <th>Nombre usuario</th>
                             <th>Rol</th>
                             <th>Salario bruto</th>
-                            <th>Retención</th>                                                        
+                            <th>Retención</th> 
+                            <th>País</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -110,7 +110,8 @@
                             <td><?php echo $u['username']; ?></td>
                             <td><?php echo $u['rol']; ?></td>
                             <td><?php echo number_format($u['salarioBruto'], 2, ',', '.'); ?></td>
-                            <td><?php echo $u['retencionIRPF']; ?>%</td>                          
+                            <td><?php echo $u['retencionIRPF']; ?>%</td>  
+                            <td><?php echo $u['country_name']; ?></td>
                         </tr>                    
                         <?php
                         }

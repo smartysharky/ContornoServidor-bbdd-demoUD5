@@ -8,7 +8,7 @@ use \PDO;
 
 class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{            
     
-    const SELECT_FROM = "SELECT u.*, ar.nombre_rol as rol FROM usuario u LEFT JOIN aux_rol ar ON ar.id_rol = u.id_rol";
+    const SELECT_FROM = "SELECT u.*, ar.nombre_rol as rol, ac.country_name FROM usuario u LEFT JOIN aux_rol ar ON ar.id_rol = u.id_rol LEFT JOIN aux_countries ac ON u.id_country = ac.id";
     
     function getAllUsers() : array{        
         $stmt = $this->pdo->query(self::SELECT_FROM);
