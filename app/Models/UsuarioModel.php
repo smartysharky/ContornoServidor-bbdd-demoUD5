@@ -62,5 +62,25 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
         return $stmt->fetchAll();
     }
     
+    function getUsuariosByRetencion(?float $min, ?float $max){
+        $query = self::SELECT_FROM . " WHERE ";
+        $condiciones = [];
+        $vars = [];
+        if(!is_null($min)){
+            $condiciones[] = "retencionIRPF >= :min";
+            $vars['min'] = $min;
+        }
+        if(!is_null($max)){
+            $condiciones[] = "retencionIRPF <= :max";
+            $vars['max'] = $max;
+        }
+        
+        $query .= implode(" AND ", $condiciones) . " ORDER BY retencionIRPF";
+        
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute($vars);
+        return $stmt->fetchAll();
+    }
+    
 }
 

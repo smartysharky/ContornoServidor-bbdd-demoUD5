@@ -82,6 +82,18 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
             
             $usuarios = $modelo->getUsuariosBySalar($min, $max);            
         }
+        else if((!empty($_GET['min_ret']) && is_numeric($_GET['min_ret'])) || (!empty($_GET['max_ret']) && is_numeric($_GET['max_ret']))){
+            $min = (!empty($_GET['min_ret']) && is_numeric($_GET['min_ret'])) ? (float) $_GET['min_ret'] : NULL;
+            /*if((!empty($_GET['min_ret']) && is_numeric($_GET['min_ret']))){
+                $min =  (float) $_GET['min_ret'] ;
+            }
+            else{
+                $min = NULL;
+            }*/
+            $max = (!empty($_GET['max_ret']) && is_numeric($_GET['max_ret'])) ? (float) $_GET['max_ret'] : NULL;
+            
+            $usuarios = $modelo->getUsuariosByRetencion($min, $max);            
+        }
         else{
             $usuarios = $modelo->getAllUsers();
         }        

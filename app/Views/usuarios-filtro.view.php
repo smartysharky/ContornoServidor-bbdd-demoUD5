@@ -60,6 +60,19 @@
                                 </div>
                             </div>
                         </div>  
+                        <div class="col-12 col-lg-4">
+                            <div class="mb-3">
+                                <label for="retencion">Retención:</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" name="min_ret" id="min_ret" value="<?php echo isset($input['min_ret']) ? $input['min_ret'] : ''; ?>" placeholder="Mí­nima" />
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" class="form-control" name="max_ret" id="max_ret" value="<?php echo isset($input['max_ret']) ? $input['max_ret'] : ''; ?>" placeholder="Máxima" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
                     </div>
                 </div>
                 <div class="card-footer">
