@@ -57,12 +57,10 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
         
         $query .= implode(" AND ", $condiciones) . " ORDER BY salarioBruto";
         
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute($vars);
-        return $stmt->fetchAll();
+        return $this->executeQuery($query, $vars);
     }
     
-    function getUsuariosByRetencion(?float $min, ?float $max){
+    function getUsuariosByRetencion(?float $min, ?float $max) : array{
         $query = self::SELECT_FROM . " WHERE ";
         $condiciones = [];
         $vars = [];
@@ -77,6 +75,25 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
         
         $query .= implode(" AND ", $condiciones) . " ORDER BY retencionIRPF";
         
+        return $this->executeQuery($query, $vars);
+    }
+    
+    function getUsuariosByCountry(array $countries) : array{
+        $ids = [];
+        $bind = [];
+        $i = 1;
+        foreach($countries as $c){
+            $key = 'id_country'.$i;
+            $ids[] = ":$key";
+            $bind[$key] = $c;
+            $i++;
+        }
+        
+        $query = self::SELECT_FROM . " WHERE  id_country IN (".implode(", ", $ids).") ORDER BY country_name";
+        return $this->executeQuery($query, $bind);
+    }
+    
+    private function executeQuery(string $query, array $vars) : array{
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($vars);
         return $stmt->fetchAll();

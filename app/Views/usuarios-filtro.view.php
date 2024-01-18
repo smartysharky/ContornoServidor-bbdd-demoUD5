@@ -97,10 +97,13 @@
         </div>
     </div>    
     <div class="col-12">
+        <?php
+        if(count($usuarios)>0){
+        ?>
         <div class="card shadow mb-4">
             <div
                 class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">UsuariosW</h6>                                    
+                <h6 class="m-0 font-weight-bold text-primary">Usuarios</h6>                                    
             </div>
             <!-- Card Body -->
             <div class="card-body" id="card_table">
@@ -132,6 +135,14 @@
                 </table>
             </div>
         </div>
+        <?php
+        }
+        else{
+            ?>
+        <div class="alert alert-warning">No se han encontrado usuarios que cumplan los requisitos.</div>
+        <?php
+        }
+        ?>
     </div>                        
 </div>
 <!--Fin HTML -->

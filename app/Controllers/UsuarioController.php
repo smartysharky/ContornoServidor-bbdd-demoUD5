@@ -97,6 +97,9 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
             
             $usuarios = $modelo->getUsuariosByRetencion($min, $max);            
         }
+        else if(!empty($_GET['id_country']) && is_array($_GET['id_country'])){
+            $usuarios = $modelo->getUsuariosByCountry($_GET['id_country']);
+        }
         else{
             $usuarios = $modelo->getAllUsers();
         }        
