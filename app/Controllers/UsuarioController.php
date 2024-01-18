@@ -67,42 +67,7 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         $input = filter_var_array($_GET, FILTER_SANITIZE_SPECIAL_CHARS);
         
         $modelo = new \Com\Daw2\Models\UsuarioModel();
-        if(!empty($_GET['id_rol']) && filter_var($_GET['id_rol'], FILTER_VALIDATE_INT)){
-            $usuarios = $modelo->getUsuariosByIdRol((int)$_GET['id_rol']);
-        }
-        else if(!empty($_GET['username'])){
-            $usuarios = $modelo->getUsuariosByUsername($_GET['username']);
-        }
-        else if((!empty($_GET['min_salar']) && is_numeric($_GET['min_salar'])) || (!empty($_GET['max_salar']) && is_numeric($_GET['max_salar']))){
-            $min = (!empty($_GET['min_salar']) && is_numeric($_GET['min_salar'])) ? (float) $_GET['min_salar'] : NULL;
-            /*if((!empty($_GET['min_salar']) && is_numeric($_GET['min_salar']))){
-                $min =  (float) $_GET['min_salar'] ;
-            }
-            else{
-                $min = NULL;
-            }*/
-            $max = (!empty($_GET['max_salar']) && is_numeric($_GET['max_salar'])) ? (float) $_GET['max_salar'] : NULL;
-            
-            $usuarios = $modelo->getUsuariosBySalar($min, $max);            
-        }
-        else if((!empty($_GET['min_ret']) && is_numeric($_GET['min_ret'])) || (!empty($_GET['max_ret']) && is_numeric($_GET['max_ret']))){
-            $min = (!empty($_GET['min_ret']) && is_numeric($_GET['min_ret'])) ? (float) $_GET['min_ret'] : NULL;
-            /*if((!empty($_GET['min_ret']) && is_numeric($_GET['min_ret']))){
-                $min =  (float) $_GET['min_ret'] ;
-            }
-            else{
-                $min = NULL;
-            }*/
-            $max = (!empty($_GET['max_ret']) && is_numeric($_GET['max_ret'])) ? (float) $_GET['max_ret'] : NULL;
-            
-            $usuarios = $modelo->getUsuariosByRetencion($min, $max);            
-        }
-        else if(!empty($_GET['id_country']) && is_array($_GET['id_country'])){
-            $usuarios = $modelo->getUsuariosByCountry($_GET['id_country']);
-        }
-        else{
-            $usuarios = $modelo->getAllUsers();
-        }        
+        $usuarios = $modelo->filter($_GET);
         
         $data = array(
             'titulo' => 'Usuarios',

@@ -29,74 +29,65 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
         $stmt = $this->pdo->query(self::SELECT_FROM . " WHERE username LIKE 'carlos%'");
         return $stmt->fetchAll();
     }
-    
-    function getUsuariosByIdRol(int $idRol) : array{
-        $stmt = $this->pdo->prepare(self::SELECT_FROM . " WHERE u.id_rol = :id_rol");
-        $stmt->execute(['id_rol' => $idRol]);
-        return $stmt->fetchAll();
-    }
-    
-    function getUsuariosByUsername(string $username) : array{
-        $stmt = $this->pdo->prepare(self::SELECT_FROM . " WHERE u.username LIKE :username");
-        $stmt->execute(['username' => "%$username%"]);
-        return $stmt->fetchAll();
-    }
-    
-    function getUsuariosBySalar(?float $min, ?float $max){
-        $query = self::SELECT_FROM . " WHERE ";
-        $condiciones = [];
-        $vars = [];
-        if(!is_null($min)){
-            $condiciones[] = "salarioBruto >= :min";
-            $vars['min'] = $min;
-        }
-        if(!is_null($max)){
-            $condiciones[] = "salarioBruto <= :max";
-            $vars['max'] = $max;
-        }
-        
-        $query .= implode(" AND ", $condiciones) . " ORDER BY salarioBruto";
-        
-        return $this->executeQuery($query, $vars);
-    }
-    
-    function getUsuariosByRetencion(?float $min, ?float $max) : array{
-        $query = self::SELECT_FROM . " WHERE ";
-        $condiciones = [];
-        $vars = [];
-        if(!is_null($min)){
-            $condiciones[] = "retencionIRPF >= :min";
-            $vars['min'] = $min;
-        }
-        if(!is_null($max)){
-            $condiciones[] = "retencionIRPF <= :max";
-            $vars['max'] = $max;
-        }
-        
-        $query .= implode(" AND ", $condiciones) . " ORDER BY retencionIRPF";
-        
-        return $this->executeQuery($query, $vars);
-    }
-    
-    function getUsuariosByCountry(array $countries) : array{
-        $ids = [];
-        $bind = [];
-        $i = 1;
-        foreach($countries as $c){
-            $key = 'id_country'.$i;
-            $ids[] = ":$key";
-            $bind[$key] = $c;
-            $i++;
-        }
-        
-        $query = self::SELECT_FROM . " WHERE  id_country IN (".implode(", ", $ids).") ORDER BY country_name";
-        return $this->executeQuery($query, $bind);
-    }
-    
+       
     private function executeQuery(string $query, array $vars) : array{
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($vars);
         return $stmt->fetchAll();
+    }
+    
+    function filter(array $filtros) : array{
+        $condiciones = [];
+        $vars = [];
+        if(!empty($filtros['id_rol']) && filter_var($filtros['id_rol'], FILTER_VALIDATE_INT)){
+            $condiciones[] = 'u.id_rol = :id_rol';
+            $vars['id_rol'] = $filtros['id_rol'];
+        }
+        if(!empty($filtros['username'])){
+            $condiciones[] = 'username LIKE :username';
+            $vars['username'] = "%$filtros[username]%";
+        }
+        if(!empty($filtros['min_salar']) && is_numeric($filtros['min_salar'])){
+            $condiciones[] = 'salarioBruto >= :min_salar';
+            $vars['min_salar'] = $filtros['min_salar'];
+        }
+        if(!empty($filtros['max_salar']) && is_numeric($filtros['max_salar'])){
+            $condiciones[] = 'salarioBruto <= :max_salar';
+            $vars['max_salar'] = $filtros['max_salar'];
+        }
+        if(!empty($filtros['min_ret']) && is_numeric($filtros['min_ret'])){
+            $condiciones[] = 'retencionIRPF >= :min_ret';
+            $vars['min_ret'] = $filtros['min_ret'];
+        }
+        if(!empty($filtros['max_ret']) && is_numeric($filtros['max_ret'])){
+            $condiciones[] = 'retencionIRPF <= :max_ret';
+            $vars['max_ret'] = $filtros['max_ret'];
+        }
+        if(!empty($filtros['id_country']) && is_array($filtros['id_country'])){
+            $ids = [];
+            $bind = [];
+            $i = 1;
+            foreach($filtros['id_country'] as $c){
+                $key = 'id_country'.$i;
+                $ids[] = ":$key";
+                $bind[$key] = $c;
+                $i++;
+            }
+            $condiciones[] = "id_country IN (".implode(", ", $ids).")";
+            $vars = array_merge($vars, $bind);
+        }
+        
+        if(empty($condiciones)){
+            $query = self::SELECT_FROM;
+            return $this->pdo->query($query)->fetchAll();
+        }
+        else{
+            $query = self::SELECT_FROM . " WHERE ".implode(" AND ", $condiciones);
+            //var_dump($vars);echo $query;die();
+            
+            return $this->executeQuery($query, $vars);
+        }
+        
     }
     
 }
