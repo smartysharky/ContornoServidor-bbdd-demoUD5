@@ -9,6 +9,7 @@ use \PDO;
 class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{            
     
     const SELECT_FROM = "SELECT u.*, ar.nombre_rol as rol, ac.country_name FROM usuario u LEFT JOIN aux_rol ar ON ar.id_rol = u.id_rol LEFT JOIN aux_countries ac ON u.id_country = ac.id";
+    const ORDER_ARRAY = ['username', 'rol', 'salarioBruto', 'retencionIRPF', 'country_name'];
     
     function getAllUsers() : array{        
         $stmt = $this->pdo->query(self::SELECT_FROM);
@@ -77,17 +78,35 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
             $vars = array_merge($vars, $bind);
         }
         
+        $order = $this->getOrder($filtros);
+        
+        $campoOrder = self::ORDER_ARRAY[$order - 1];
+        
         if(empty($condiciones)){
-            $query = self::SELECT_FROM;
+            $query = self::SELECT_FROM . " ORDER BY $campoOrder";
             return $this->pdo->query($query)->fetchAll();
         }
         else{
-            $query = self::SELECT_FROM . " WHERE ".implode(" AND ", $condiciones);
+            $query = self::SELECT_FROM . " WHERE ".implode(" AND ", $condiciones). "ORDER BY $campoOrder";
             //var_dump($vars);echo $query;die();
             
             return $this->executeQuery($query, $vars);
         }
         
+    }
+    
+    public static function getMaxColumnOrder() : int{
+        return  count(self::ORDER_ARRAY);
+    }
+    
+    public function getOrder(array $filtros) : int{
+        if(!isset($filtros['order']) || $filtros['order'] < 1 || $filtros['order'] > count(self::ORDER_ARRAY)){
+            $order = 1;
+        }
+        else{
+            $order = (int)$filtros['order'];
+        }
+        return $order;
     }
     
 }

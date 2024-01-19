@@ -67,7 +67,7 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         $input = filter_var_array($_GET, FILTER_SANITIZE_SPECIAL_CHARS);
         
         $modelo = new \Com\Daw2\Models\UsuarioModel();
-        $usuarios = $modelo->filter($_GET);
+        $usuarios = $modelo->filter($_GET);                
         
         $data = array(
             'titulo' => 'Usuarios',
@@ -77,6 +77,7 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
             'roles' => $roles,
             'paises' => $paises,
             'input' => $input,
+            'order'  => $modelo->getOrder($_GET),
             'js' => array('plugins/select2/js/select2.full.min.js', 'assets/js/pages/usuarios-filtro.view.js')
         );                
         $this->view->showViews(array('templates/header.view.php', 'usuarios-filtro.view.php', 'templates/footer.view.php'), $data);

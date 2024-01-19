@@ -110,11 +110,11 @@
                 <table id="tabladatos" class="table table-striped">                    
                     <thead>
                         <tr>
-                            <th>Nombre usuario</th>
-                            <th>Rol</th>
-                            <th>Salario bruto</th>
-                            <th>Retención</th> 
-                            <th>País</th>
+                            <th><a href="/usuarios?order=1">Nombre usuario</a> <?php echo ($order == 1) ? '<i class="fas fa-sort-amount-down-alt">' : ''; ?></th>
+                            <th><a href="/usuarios?order=2">Rol</a> <?php echo ($order == 2) ? '<i class="fas fa-sort-amount-down-alt">' : ''; ?></th>
+                            <th><a href="/usuarios?order=3">Salario bruto</a> <?php echo ($order == 3) ? '<i class="fas fa-sort-amount-down-alt">' : ''; ?></th>
+                            <th><a href="/usuarios?order=4">Retención</a> <?php echo ($order == 4) ? '<i class="fas fa-sort-amount-down-alt">' : ''; ?></th> 
+                            <th><a href="/usuarios?order=5">País</a> <?php echo ($order == 5) ? '<i class="fas fa-sort-amount-down-alt">' : ''; ?></th>
                         </tr>
                     </thead>
                     <tbody>
