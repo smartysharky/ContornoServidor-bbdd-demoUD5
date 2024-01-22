@@ -18,7 +18,8 @@
         ?>
         <div class="col-12">
         <div class="card shadow mb-4">
-            <form method="get" action="">                
+            <form method="get" action="">       
+                <input type="hidden" name="order" value="<?php echo $order; ?>" />
                 <div
                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Filtros</h6>                                    
@@ -98,7 +99,7 @@
     </div>    
     <div class="col-12">
         <?php
-        if(count($usuarios)>0){
+        if(count($usuarios) > 0){
         ?>
         <div class="card shadow mb-4">
             <div
@@ -110,11 +111,11 @@
                 <table id="tabladatos" class="table table-striped">                    
                     <thead>
                         <tr>
-                            <th><a href="/usuarios?order=<?php echo ($order == 1) ? '-' : ''; ?>1">Nombre usuario</a> <?php echo (abs($order) == 1) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th>
-                            <th><a href="/usuarios?order=<?php echo ($order == 2) ? '-' : ''; ?>2">Rol</a> <?php echo (abs($order) == 2) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th>
-                            <th><a href="/usuarios?order=<?php echo ($order == 3) ? '-' : ''; ?>3">Salario bruto</a> <?php echo (abs($order) == 3) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th>
-                            <th><a href="/usuarios?order=<?php echo ($order == 4) ? '-' : ''; ?>4">Retención</a> <?php echo (abs($order) == 4) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th> 
-                            <th><a href="/usuarios?order=<?php echo ($order == 5) ? '-' : ''; ?>5">País</a> <?php echo (abs($order) == 5) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th>
+                            <th><a href="/usuarios?order=<?php echo ($order == 1) ? '-' : ''; ?>1&<?php echo $parameters;?>">Nombre usuario</a> <?php echo (abs($order) == 1) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th>
+                            <th><a href="/usuarios?order=<?php echo ($order == 2) ? '-' : ''; ?>2&<?php echo $parameters;?>">Rol</a> <?php echo (abs($order) == 2) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th>
+                            <th><a href="/usuarios?order=<?php echo ($order == 3) ? '-' : ''; ?>3&<?php echo $parameters;?>">Salario bruto</a> <?php echo (abs($order) == 3) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th>
+                            <th><a href="/usuarios?order=<?php echo ($order == 4) ? '-' : ''; ?>4&<?php echo $parameters;?>">Retención</a> <?php echo (abs($order) == 4) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th> 
+                            <th><a href="/usuarios?order=<?php echo ($order == 5) ? '-' : ''; ?>5&<?php echo $parameters;?>">País</a> <?php echo (abs($order) == 5) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th>
                         </tr>
                     </thead>
                     <tbody>
