@@ -78,6 +78,7 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
             'paises' => $paises,
             'input' => $input,
             'order'  => $modelo->getOrder($_GET),
+            'sentido' => $modelo->getSentido($_GET),
             'js' => array('plugins/select2/js/select2.full.min.js', 'assets/js/pages/usuarios-filtro.view.js')
         );                
         $this->view->showViews(array('templates/header.view.php', 'usuarios-filtro.view.php', 'templates/footer.view.php'), $data);

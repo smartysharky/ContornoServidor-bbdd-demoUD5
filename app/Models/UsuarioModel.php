@@ -83,13 +83,11 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
         $campoOrder = self::ORDER_ARRAY[$order - 1];
         
         if(empty($condiciones)){
-            $query = self::SELECT_FROM . " ORDER BY $campoOrder";
+            $query = self::SELECT_FROM . " ORDER BY $campoOrder " . $this->getSentido($filtros);
             return $this->pdo->query($query)->fetchAll();
         }
         else{
-            $query = self::SELECT_FROM . " WHERE ".implode(" AND ", $condiciones). "ORDER BY $campoOrder";
-            //var_dump($vars);echo $query;die();
-            
+            $query = self::SELECT_FROM . " WHERE ".implode(" AND ", $condiciones). "ORDER BY $campoOrder " . $this->getSentido($filtros);
             return $this->executeQuery($query, $vars);
         }
         
@@ -107,6 +105,15 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
             $order = (int)$filtros['order'];
         }
         return $order;
+    }
+    
+    function getSentido(array $filtros){
+        if(isset($filtros['sentido']) && $filtros['sentido'] == 'desc'){
+            return 'desc';
+        }
+        else{
+            return 'asc';
+        }
     }
     
 }
