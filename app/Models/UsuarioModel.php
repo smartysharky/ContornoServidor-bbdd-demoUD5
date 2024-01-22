@@ -80,14 +80,15 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
         
         $order = $this->getOrder($filtros);
         
-        $campoOrder = self::ORDER_ARRAY[$order - 1];
+        $campoOrder = self::ORDER_ARRAY[abs($order) - 1];
         
         if(empty($condiciones)){
-            $query = self::SELECT_FROM . " ORDER BY $campoOrder " . $this->getSentido($filtros);
+            $query = self::SELECT_FROM . " ORDER BY $campoOrder " . $this->getSentido($order);
+            //echo $query; die;
             return $this->pdo->query($query)->fetchAll();
         }
         else{
-            $query = self::SELECT_FROM . " WHERE ".implode(" AND ", $condiciones). "ORDER BY $campoOrder " . $this->getSentido($filtros);
+            $query = self::SELECT_FROM . " WHERE ".implode(" AND ", $condiciones). " ORDER BY $campoOrder " . $this->getSentido($order);
             return $this->executeQuery($query, $vars);
         }
         
@@ -98,7 +99,7 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
     }
     
     public function getOrder(array $filtros) : int{
-        if(!isset($filtros['order']) || $filtros['order'] < 1 || $filtros['order'] > count(self::ORDER_ARRAY)){
+        if(!isset($filtros['order']) || abs($filtros['order']) < 1 || abs($filtros['order']) > count(self::ORDER_ARRAY)){
             $order = 1;
         }
         else{
@@ -107,13 +108,9 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
         return $order;
     }
     
-    function getSentido(array $filtros){
-        if(isset($filtros['sentido']) && $filtros['sentido'] == 'desc'){
-            return 'desc';
-        }
-        else{
-            return 'asc';
-        }
+    function getSentido(int $order){
+        //echo $order;
+        return ($order >= 0) ? 'asc' : 'desc';
     }
     
 }

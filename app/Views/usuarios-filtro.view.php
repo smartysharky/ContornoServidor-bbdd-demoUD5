@@ -110,11 +110,11 @@
                 <table id="tabladatos" class="table table-striped">                    
                     <thead>
                         <tr>
-                            <th><a href="/usuarios?order=1&sentido=<?php echo ($order == 1 && $sentido == 'asc') ? 'desc' : 'asc'; ?>">Nombre usuario</a> <?php echo ($order == 1) ? '<i class="fas fa-sort-amount-down-alt">' : ''; ?></th>
-                            <th><a href="/usuarios?order=2&sentido=<?php echo ($order == 2 && $sentido == 'asc') ? 'desc' : 'asc'; ?>">Rol</a> <?php echo ($order == 2) ? '<i class="fas fa-sort-amount-down-alt">' : ''; ?></th>
-                            <th><a href="/usuarios?order=3&sentido=<?php echo ($order == 3 && $sentido == 'asc') ? 'desc' : 'asc'; ?>">Salario bruto</a> <?php echo ($order == 3) ? '<i class="fas fa-sort-amount-down-alt">' : ''; ?></th>
-                            <th><a href="/usuarios?order=4&sentido=<?php echo ($order == 4 && $sentido == 'asc') ? 'desc' : 'asc'; ?>">Retención</a> <?php echo ($order == 4) ? '<i class="fas fa-sort-amount-down-alt">' : ''; ?></th> 
-                            <th><a href="/usuarios?order=5&sentido=<?php echo ($order == 5 && $sentido == 'asc') ? 'desc' : 'asc'; ?>">País</a> <?php echo ($order == 5) ? '<i class="fas fa-sort-amount-down-alt">' : ''; ?></th>
+                            <th><a href="/usuarios?order=<?php echo ($order == 1) ? '-' : ''; ?>1">Nombre usuario</a> <?php echo (abs($order) == 1) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th>
+                            <th><a href="/usuarios?order=<?php echo ($order == 2) ? '-' : ''; ?>2">Rol</a> <?php echo (abs($order) == 2) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th>
+                            <th><a href="/usuarios?order=<?php echo ($order == 3) ? '-' : ''; ?>3">Salario bruto</a> <?php echo (abs($order) == 3) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th>
+                            <th><a href="/usuarios?order=<?php echo ($order == 4) ? '-' : ''; ?>4">Retención</a> <?php echo (abs($order) == 4) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th> 
+                            <th><a href="/usuarios?order=<?php echo ($order == 5) ? '-' : ''; ?>5">País</a> <?php echo (abs($order) == 5) ? '<i class="fas fa-sort-amount-'.($order < 0 ? 'up' : 'down').'-alt">' : ''; ?></th>
                         </tr>
                     </thead>
                     <tbody>
