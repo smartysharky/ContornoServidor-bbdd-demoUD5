@@ -12,4 +12,12 @@ class InicioController extends \Com\Daw2\Core\BaseController {
         $this->view->showViews(array('templates/header.view.php', 'inicio.view.php', 'templates/footer.view.php'), $data);
     }
 
+        
+    public function listadoEjemplo() {
+        $data = array(
+            'titulo' => 'Listado ejemplo',
+            'breadcrumb' => ['Inicio', 'Listado ejemplo']
+        );        
+        $this->view->showViews(array('templates/header.view.php', 'proveedores.sample.php', 'templates/footer.view.php'), $data);
+    }
 }

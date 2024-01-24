@@ -1,6 +1,6 @@
 <!--Inicio HTML -->
 <div class="row">       
-        <?php
+        <?php        
         if($_ENV['app.debug'] & isset($_GET)){
             ?>
             <div class="col-6">
@@ -132,8 +132,55 @@
                         <?php
                         }
                         ?>
-                    </tbody>                    
+                    </tbody> 
+                    <tfoot>
+                        <tr><td colspan="999">Registros en la búsqueda: <?php echo $numRegistros; ?></td></tr>
+                    </tfoot>
                 </table>
+            </div>
+            <div class="card-footer">
+                <nav aria-label="Navegacion por paginas">
+                    <ul class="pagination justify-content-center">
+                        <?php
+                        if($paginaActual > 1){
+                        ?>
+                        <li class="page-item">
+                            <a class="page-link" href="/usuarios?page=1&<?php echo $parameters;?>" aria-label="First">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">First</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="/usuarios?page=<?php echo ($paginaActual - 1); ?>&<?php echo $parameters;?>" aria-label="Previous">
+                                <span aria-hidden="true">&lt;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <?php
+                        }
+                        ?>
+                        
+                        <li class="page-item active"><a class="page-link"><?php echo $paginaActual; ?></a></li>  
+                        <?php
+                        if($maxPagina > $paginaActual){
+                        ?>
+                        <li class="page-item">
+                            <a class="page-link" href="/usuarios?page=<?php echo ($paginaActual + 1); ?>&<?php echo $parameters;?>" aria-label="Next">
+                                <span aria-hidden="true">&gt;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="/usuarios?page=<?php echo $maxPagina; ?>&<?php echo $parameters;?>" aria-label="Last">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Last</span>
+                            </a>
+                        </li>
+                        <?php
+                        }
+                        ?>
+                    </ul>
+                </nav>
             </div>
         </div>
         <?php

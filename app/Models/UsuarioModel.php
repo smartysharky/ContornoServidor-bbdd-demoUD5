@@ -9,6 +9,8 @@ use \PDO;
 class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{            
     
     const SELECT_FROM = "SELECT u.*, ar.nombre_rol as rol, ac.country_name FROM usuario u LEFT JOIN aux_rol ar ON ar.id_rol = u.id_rol LEFT JOIN aux_countries ac ON u.id_country = ac.id";
+    const SELECT_COUNT = "SELECT COUNT(*) as total FROM usuario u LEFT JOIN aux_rol ar ON ar.id_rol = u.id_rol LEFT JOIN aux_countries ac ON u.id_country = ac.id";
+    
     const ORDER_ARRAY = ['username', 'rol', 'salarioBruto', 'retencionIRPF', 'country_name'];
     
     function getAllUsers() : array{        
@@ -37,7 +39,12 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
         return $stmt->fetchAll();
     }
     
-    function filter(array $filtros) : array{
+    /**
+     * 
+     * @param array $filtros Array con los parámetros por los que debemos filtrar
+     * @return array Array con dos posiciones: vars: array asociativo que contiene como clave las variables y como valor su valor asociado. condiciones: array con las condiciones a aplicar en el where
+     */
+    private function calcCondsAndVars(array $filtros) : array{
         $condiciones = [];
         $vars = [];
         if(!empty($filtros['id_rol']) && filter_var($filtros['id_rol'], FILTER_VALIDATE_INT)){
@@ -77,19 +84,53 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
             $condiciones[] = "id_country IN (".implode(", ", $ids).")";
             $vars = array_merge($vars, $bind);
         }
+        return [
+            'condiciones' => $condiciones,
+            'vars' => $vars
+        ];
+    }
+    
+    /**
+     * Función que devuelve el número de registros que cumplen las condiciones dadas
+     * @param type $filtros Los filtros a aplicar
+     * @return int Número de registros que cumplen la condición
+     */
+    function getNumRegFilter($filtros) : int{
+        $whereVars = $this->calcCondsAndVars($filtros);                
+        
+        if(empty($whereVars['condiciones'])){
+            $query = self::SELECT_COUNT;
+            //echo $query; die;
+            return $this->pdo->query($query)->fetchColumn();
+        }
+        else{
+            $query = self::SELECT_COUNT . " WHERE ".implode(" AND ", $whereVars['condiciones']);
+            //echo $query; var_dump($whereVars['vars']);die;
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute($whereVars['vars']);
+            return $stmt->fetchColumn();
+        }
+    }
+    
+    function filter(array $filtros) : array{
+        $whereVars = $this->calcCondsAndVars($filtros);
         
         $order = $this->getOrder($filtros);
         
         $campoOrder = self::ORDER_ARRAY[abs($order) - 1];
         
-        if(empty($condiciones)){
-            $query = self::SELECT_FROM . " ORDER BY $campoOrder " . $this->getSentido($order);
+        $page = $this->getPage($filtros);
+        
+        $regInicial = ($page - 1) * $_ENV['page.size'];
+        
+        if(empty($whereVars['condiciones'])){
+            $query = self::SELECT_FROM . " ORDER BY $campoOrder " . $this->getSentido($order) . " LIMIT $regInicial, ".$_ENV['page.size'];
             //echo $query; die;
             return $this->pdo->query($query)->fetchAll();
         }
         else{
-            $query = self::SELECT_FROM . " WHERE ".implode(" AND ", $condiciones). " ORDER BY $campoOrder " . $this->getSentido($order);
-            return $this->executeQuery($query, $vars);
+            $query = self::SELECT_FROM . " WHERE ".implode(" AND ", $whereVars['condiciones']). " ORDER BY $campoOrder " . $this->getSentido($order). " LIMIT $regInicial, ".$_ENV['page.size'];
+            return $this->executeQuery($query, $whereVars['vars']);
         }
         
     }
@@ -111,6 +152,15 @@ class UsuarioModel extends \Com\Daw2\Core\BaseDbModel{
     function getSentido(int $order){
         //echo $order;
         return ($order >= 0) ? 'asc' : 'desc';
+    }
+    
+    function getPage($filtros) : int{
+        if(isset($filtros['page']) && filter_var($filtros['page'], FILTER_VALIDATE_INT) && $filtros['page'] > 0){
+            return (int)$filtros['page'];
+        }
+        else{
+            return 1;
+        }
     }
     
 }

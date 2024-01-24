@@ -71,6 +71,10 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         //echo http_build_query($_GET); die;
         $copiaGet = $_GET;
         unset($copiaGet['order']);
+        unset($copiaGet['page']);
+        
+        $numRegistros = $modelo->getNumRegFilter($_GET);
+        $maxPag = ceil($numRegistros / $_ENV['page.size']);
         
         $data = array(
             'titulo' => 'Usuarios',
@@ -81,7 +85,10 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
             'paises' => $paises,
             'input' => $input,
             'order'  => $modelo->getOrder($_GET),   
-            'parameters' => http_build_query($copiaGet),        
+            'numRegistros' => $numRegistros,            
+            'parameters' => http_build_query($copiaGet),    
+            'maxPagina' => $maxPag,
+            'paginaActual' => $modelo->getPage($_GET),
             'js' => array('plugins/select2/js/select2.full.min.js', 'assets/js/pages/usuarios-filtro.view.js')
         );                
         $this->view->showViews(array('templates/header.view.php', 'usuarios-filtro.view.php', 'templates/footer.view.php'), $data);

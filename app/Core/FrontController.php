@@ -62,6 +62,13 @@ class FrontController{
                 }
                 , 'get');
                 
+        Route::add('/listado-demo', 
+                function(){
+                    $controlador = new \Com\Daw2\Controllers\InicioController();
+                    $controlador->listadoEjemplo();
+                }
+                , 'get');
+                
         Route::pathNotFound(
             function(){
                 $controller = new \Com\Daw2\Controllers\ErroresController();
